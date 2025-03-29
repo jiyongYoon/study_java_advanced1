@@ -2,7 +2,6 @@ package thread.sync.test;
 
 import static util.MyLogger.log;
 
-import thread.control.CheckedExceptionMain.Runnable;
 
 // localValue의 지역변수에 동시성 문제가 발생하는지 하지 않는지 생각해보자
 // -> count() 메서드는 같은 myCounter 객체로 참조하지만, 그 메서드를 호출한 각 스레드에 스택영역 안에 변수가 생기므로

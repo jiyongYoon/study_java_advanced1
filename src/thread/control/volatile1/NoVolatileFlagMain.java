@@ -3,8 +3,6 @@ package thread.control.volatile1;
 import static util.MyLogger.log;
 import static util.ThreadUtils.sleep;
 
-import thread.control.CheckedExceptionMain.Runnable;
-
 public class NoVolatileFlagMain {
 
   public static void main(String[] args) {

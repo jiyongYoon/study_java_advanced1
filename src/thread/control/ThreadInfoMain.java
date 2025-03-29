@@ -9,7 +9,7 @@ public class ThreadInfoMain {
   public static void main(String[] args) {
     Thread mainThread = Thread.currentThread();
     log("mainThread = " + mainThread);
-    log("mainThread.threadId() = " + mainThread.threadId());
+//    log("mainThread.threadId() = " + mainThread.threadId()); // intellij랑 java버전때문에 21->17로 내리면서 메서드 못씀
     log("mainThread.getName() = " + mainThread.getName());
     log("mainThread.getPriority() = " + mainThread.getPriority()); // 1~10, 기본값 5, 우선순위가 높을수록 좀 더 자주 실행될 가능성이 높아짐.
     log("mainThread.getThreadGroup() = " + mainThread.getThreadGroup());
@@ -17,7 +17,7 @@ public class ThreadInfoMain {
 
     Thread myThread = new Thread(new HelloRunnable(), "myThread");
     log("myThread = " + myThread);
-    log("myThread.threadId() = " + myThread.threadId());
+//    log("myThread.threadId() = " + myThread.threadId());
     log("myThread.getName() = " + myThread.getName());
     log("myThread.getPriority() = " + myThread.getPriority()); // 1~10, 기본값 5, 우선순위가 높을수록 좀 더 자주 실행될 가능성이 높아짐.
     log("myThread.getThreadGroup() = " + myThread.getThreadGroup());

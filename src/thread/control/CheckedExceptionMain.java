@@ -22,11 +22,11 @@ public class CheckedExceptionMain {
    */
 
   // 실제 java에서 정의되어있는 Runnable 인터페이스의 메서드
-  @FunctionalInterface
-  public interface Runnable {
-    /**
-     * Runs this operation.
-     */
-    void run();
-  }
+//  @FunctionalInterface
+//  public interface Runnable {
+//    /**
+//     * Runs this operation.
+//     */
+//    void run();
+//  }
 }
