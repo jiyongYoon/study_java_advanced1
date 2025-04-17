@@ -102,3 +102,44 @@
 - [7. `ArrayBlockingQueue`의 다른 메서드 사용 - 1](/src/thread/bounded/BoundedQueueV6_2.java)
 - [7. `ArrayBlockingQueue`의 다른 메서드 사용 - 2](/src/thread/bounded/BoundedQueueV6_3.java)
 - [7. `ArrayBlockingQueue`의 다른 메서드 사용 - 3](/src/thread/bounded/BoundedQueueV6_4.java)
+
+# 8. CAS - 동기화와 원자적 연산
+
+- 더 이상 나눌 수 없는 단위로 수행되는 연산
+- [코드](/src/thread/cas/increment/IncrementPerformanceMain.java)
+
+|    primitive     |volatile|synchronized|Atomic| 
+|:----------------:|:---:|:---:|:---:|
+| 가장 빠름, 스레드 세이프 X | 느림, 스레드 세이프 X | 느림, 스레드 세이프 O | 준수함, 스레드 세이프 O |
+
+|           Lock 방식            |   CAS(Compare and Swap) 방식    |
+|:----------------------------:|:-----------------------------:|
+|     비관적(pessimistic) 접근법     |                               | 낙관적(optimistic) 접근법|
+|   다른 스레드가 방해할 것을 대비해 접근 막음   |     다른 스레드가 접근하면 재시도 하면 됨     |
+| 락을 얻기 위해서 대기 -> `긴 임계영역`에 유리 | 대기하지 않음(무한 시도) -> `짧은 임계영역`에 유리 |
+
+# 9. 동시성 컬렉션
+- `java.util.concurrent` 패키지에 포함되어 있는 컬렉션
+- `ConcurrentHashMap`, `CopyOnWriteArrayList`, `BlockingQueue` 등이 대표적임
+  - `synchronized`, `Lock(ReentrantLock)`, `CAS` 등 다양한 방법을 섞어 이미 구현을 잘 해둠
+
+# 10. 스레드 풀과 Executor 프레임워크
+
+- 스레드 생성은 비용이 큰 작업
+  - 메모리 할당 (보통 1MB 이상)
+  - 운영체제 자원 사용
+  - 스케줄러 설정
+
+**=> 스레드 풀을 사용하여 스레드를 미리 생성해두고 재사용함으로써 성능을 높일 수 있음**
+
+- [코드 - 기본 구현체인 `ThreadPoolExecutor`](/src/thread/executor/ExecutorBasicMain.java)
+  - `maximumPoolSize`는 최대 스레드 개수이나, 큐가 다 찬 경우에 생성된다는 것을 유의하기!
+- [코드 - `Executor` 프레임워크](/src/thread/executor/future/CallableMainV1.java)
+- [코드 - `Runnable`을 보완한 `Callable`](/src/thread/executor/future/CallableMainV2.java)
+- [코드 - 비동기 결과를 받는 `Future`](/src/thread/executor/future/FutureDescription.java)
+- [코드 - `Future`의 `get()` 메서드 활용](/src/thread/executor/future/SumTaskMainV2.java)
+- [코드 - `ExecutorService` 작업 컬렉션 처리](/src/thread/executor/future/InvokeAllMain.java)
+- [코드 - `ExecutorService` 예제](/src/thread/executor/test/NewOrderServiceTestMain.java)
+- [코드 - `ExecutorService` 종료 전략](/src/thread/executor/ExecutorShutdownMain.java)
+- [코드 - 실무에 적용할 `Executor` 스레드 풀 전략](/src/thread/executor/poolsize/PoolSizeMainV4.java)
+- [코드 - `Executor`의 예외 정책](/src/thread/executor/reject/RejectMainV1.java)
