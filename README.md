@@ -103,6 +103,33 @@
 - [7. `ArrayBlockingQueue`의 다른 메서드 사용 - 2](/src/thread/bounded/BoundedQueueV6_3.java)
 - [7. `ArrayBlockingQueue`의 다른 메서드 사용 - 3](/src/thread/bounded/BoundedQueueV6_4.java)
 
+## 1) BlockingQueue
+### 특징
+1. 큐에 요소를 추가&제거하는 작업 자체는 락을 획득해야 수행할 수 있다.
+2. 때문에 FIFO 특성이 유지되며, 모든 큐 작업은 원자적 동작이 보장된다.
+3. 큐에 요소를 넣는 작업(생산자)이 완료되면, 큐에서 요소를 빼기 위해 대기하고 있는 소비자 스레드를 깨운다.
+4. 큐에서 요소를 빼는 작업(소비자)이 완료되면, 큐에 요소를 넣기 위해 대기하고 있는 생산자 스레드를 깨운다.
+
+### 메서드 별 동작
+|Operation| Throws Exception(예외 던짐)                 | Blocks(무작정 대기) | Special Value(즉시 반환) | Times Out(특정 시간만큼 대기)        |
+|:---|:----------------------------------------|:---------------|:---------------|:-----------------------------|
+|Insert(추가)| add(e) <br> └─IllegalStateException     | put(e)         |  offer(e) → false | offer(e, time, unit) → false |
+|Remove(제거)| remove() <br> └─NoSuchElementException  | take()         | poll() → null  | poll(time, unit) → null      |
+|Examine(관찰)| element() <br> └─NoSuchElementException | -              | peek() → null | -                            |
+
+## 2) BlockingQueue 인터페이스의 대표적인 구현체
+### (1) ArrayBlockingQueue
+- 배열 기반으로 구현되어 있고, 버퍼의 크기가 고정되어 있음
+### (2) LinkedBlockingQueue
+- 링크 기반으로 구현되어 있고, 버퍼 크기를 고정할 수도, 또는 무한하게 사용할 수도 있음
+
+> 큐에 생산 또는 소비하는 한 쪽 스레드가 1개더라도 BlockingQueue를 사용해야 하는가?
+> 
+> -> Yes. <br> 
+> -> 큐의 내부 상태를 업데이트하는 여러 단계의 작업(예: items[tail] = e; tail++; count++;)이 겹치면서 일부 요소가 제대로 추가되지 않고 덮어쓰여지거나 누락될 수 있음
+> 
+> 다른 대안으로는 낙관적 락 기반의 Concurrent 패키지가 있다.
+
 # 8. CAS - 동기화와 원자적 연산
 
 - 더 이상 나눌 수 없는 단위로 수행되는 연산
